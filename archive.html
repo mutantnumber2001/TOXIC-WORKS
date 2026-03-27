@@ -99,10 +99,12 @@
             right: 20px;
             writing-mode: vertical-lr;
         }
-.warning-text {
-  /* 0.0（完全に透明）〜 1.0（完全に不透明）の間で指定 */
-  opacity: 0.6; 
-}
+
+        .warning-text {
+            /* 0.0（完全に透明）〜 1.0（完全に不透明）の間で指定 */
+            opacity: 0.6;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -187,16 +189,20 @@
         }
 
         .work-img {
-    width: 100%;
-    height: 200px; /* 枠の高さは維持 */
-    object-fit: contain; /* 切り抜かずに全体を表示 */
-    background: #000; /* 余白を黒で埋める */
-    filter: grayscale(0.5);
-    transition: 0.3s;
-}
+            width: 100%;
+            height: 200px;
+            /* 枠の高さは維持 */
+            object-fit: contain;
+            /* 切り抜かずに全体を表示 */
+            background: #000;
+            /* 余白を黒で埋める */
+            filter: grayscale(0.5);
+            transition: 0.3s;
+        }
 
         .work-item:hover .work-img {
-            filter: grayscale(0); /* ホバーで鮮やかに */
+            filter: grayscale(0);
+            /* ホバーで鮮やかに */
         }
 
         .work-info {
@@ -221,9 +227,13 @@
             transition: 0.3s;
         }
 
-        .back-link:hover { background: #ccff00; color: #000; }
+        .back-link:hover {
+            background: #ccff00;
+            color: #000;
+        }
     </style>
 </head>
+
 <body>
     <div class="noise-overlay"></div>
     <img src="左上.png" class="corner-decoration top-left" alt="装飾左上">
@@ -269,4 +279,5 @@
         <a href="index.html" class="back-link">BACK TO HOME</a>
     </div>
 </body>
+
 </html>
