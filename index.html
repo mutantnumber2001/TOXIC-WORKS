@@ -84,13 +84,12 @@
             width: 800px;
             min-height: 100vh;
             margin: 20px auto;
-            background-color: rgba(238, 255, 2, 0.8);
-            background-image: url('ロゴ2.svg');
+           background-color: rgba(30, 30, 30, 0.8);
+            background-image: url('ロゴ.svg');
             background-repeat: no-repeat;
-            background-position: top center;
-            background-size: 140%;
-            outline: 5px solid #093d02;
-            outline-offset: -15px;
+            background-position: center;
+            background-size: 100%;
+             border: 1px solid #ccff00;
             box-shadow: 0 0 20px rgba(204, 255, 0, 0.2);
             padding: 70px;
             display: flex;
@@ -113,8 +112,8 @@
        .btn-group {
     position: relative;
     width: 100%;
-    height: 600px; /* 300pxから600pxに広げて、ボタンが暴れ回るスペースを作る */
-    display: block;
+    height: 1000px; /* 300pxから600pxに広げて、ボタンが暴れ回るスペースを作る */
+    margin: 0 auto;
 }
 
 .btn-img-link {
@@ -133,7 +132,7 @@
 /* ホバーした時はさらに巨大化させる */
 .btn-img-link:hover img {
     filter: drop-shadow(0 0 15px rgba(204, 255, 0, 1)) invert(1);
-    transform: scale(1.2) rotate(5deg); /* 1.1から1.2へ。回転も強めに */
+    transform: scale(1.4) rotate(5deg); /* 1.1から1.2へ。回転も強めに */
     animation: button-shake 0.2s infinite;
 }
 
@@ -169,26 +168,74 @@
         </div>
 
     </div>
-    <script>
+   <script>
     window.onload = function() {
         const buttons = document.querySelectorAll('.btn-img-link');
         const container = document.querySelector('.btn-group');
+        const placedRects = []; // 配置済みのボタンを記録
+
+        // --- 中央の「ロゴ区域（進入禁止）」を定義 ---
+        // containerWidth, Heightを取得
+        const cw = container.clientWidth;
+        const ch = container.clientHeight;
+
+        // ここでロゴの「禁止エリア」の大きさを決める（px単位）
+        const fw = 500; // ロゴの横幅（これくらいかな？）
+        const fh = 400; // ロゴの高さ
+
+        const forbiddenRect = {
+            x: (cw / 2) - (fw / 2),
+            y: (ch / 2) - (fh / 2),
+            w: fw,
+            h: fh
+        };
 
         buttons.forEach(btn => {
-            // コンテナの幅と高さから、ボタンがはみ出さない範囲を計算
-            const maxX = container.clientWidth - btn.clientWidth;
-            const maxY = container.clientHeight - btn.clientHeight;
+            const bw = btn.clientWidth;
+            const bh = btn.clientHeight;
+            const maxX = cw - bw;
+            const maxY = ch - bh;
 
-            // ランダムな数値を生成
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
+            let rx, ry;
+            let isSafe = false;
+            let attempts = 0;
 
-            // 位置を適用
-            btn.style.left = randomX + 'px';
-            btn.style.top = randomY + 'px';
+            // 安全な場所が見つかるまで最大200回リトライ
+            while (!isSafe && attempts < 200) {
+                rx = Math.floor(Math.random() * maxX);
+                ry = Math.floor(Math.random() * maxY);
+
+                // 1. ロゴ区域と重なっているか判定
+                const overlapForbidden = !(
+                    rx + bw < forbiddenRect.x ||
+                    rx > forbiddenRect.x + forbiddenRect.w ||
+                    ry + bh < forbiddenRect.y ||
+                    ry > forbiddenRect.y + forbiddenRect.h
+                );
+
+                // 2. 他のボタンと重なっているか判定
+                const overlapOthers = placedRects.some(rect => {
+                    return !(
+                        rx + bw < rect.x ||
+                        rx > rect.x + rect.w ||
+                        ry + bh < rect.y ||
+                        ry > rect.y + rect.h
+                    );
+                });
+
+                // 「ロゴとも重ならず」かつ「他のボタンとも重ならない」ならOK
+                if (!overlapForbidden && !overlapOthers) {
+                    isSafe = true;
+                }
+                attempts++;
+            }
+
+            // 場所を記録して適用
+            placedRects.push({ x: rx, y: ry, w: bw, h: bh });
+            btn.style.left = rx + 'px';
+            btn.style.top = ry + 'px';
             
-            // ついでに角度も少しランダムに傾けるとより「毒」っぽい
-            const randomRotate = Math.floor(Math.random() * 20) - 10; // -10度〜10度
+            const randomRotate = Math.floor(Math.random() * 20) - 10;
             btn.style.transform = `rotate(${randomRotate}deg)`;
         });
     };
