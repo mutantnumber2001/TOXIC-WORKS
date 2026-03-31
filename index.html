@@ -15,59 +15,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* ドットを少し大きく、色を白っぽくして目立たせる */
             background: radial-gradient(circle, rgba(14, 13, 13, 0.822) 15px, transparent 15px);
             background-size: 4px 4px;
             pointer-events: none;
             z-index: 9999;
-            /* overlayからscreenに変更して、暗い場所でも見えるようにする */
             mix-blend-mode: screen;
             animation: noise-anim 0.15s infinite;
-            /* アニメーション速度を少し上げたよ */
         }
 
-        /* ノイズを動かすアニメーションの定義 */
         @keyframes noise-anim {
-            0% {
-                transform: translate(0, 0);
-                opacity: 0.3;
-            }
-
-            15% {
-                transform: translate(-8px, 4px);
-                opacity: 0.6;
-            }
-
-            /* 瞬間的に大きくズレる */
-            30% {
-                transform: translate(5px, -5px);
-                opacity: 0.2;
-            }
-
-            45% {
-                transform: translate(-4px, 8px);
-                opacity: 0.7;
-            }
-
-            60% {
-                transform: translate(7px, 2px);
-                opacity: 0.3;
-            }
-
-            75% {
-                transform: translate(-6px, -3px);
-                opacity: 0.5;
-            }
-
-            90% {
-                transform: translate(3px, 6px);
-                opacity: 0.2;
-            }
-
-            100% {
-                transform: translate(0, 0);
-                opacity: 0.4;
-            }
+            0% { transform: translate(0, 0); opacity: 0.3; }
+            15% { transform: translate(-8px, 4px); opacity: 0.6; }
+            30% { transform: translate(5px, -5px); opacity: 0.2; }
+            45% { transform: translate(-4px, 8px); opacity: 0.7; }
+            60% { transform: translate(7px, 2px); opacity: 0.3; }
+            75% { transform: translate(-6px, -3px); opacity: 0.5; }
+            90% { transform: translate(3px, 6px); opacity: 0.2; }
+            100% { transform: translate(0, 0); opacity: 0.4; }
         }
 
         /* 2. 両サイドの警告テキスト */
@@ -77,28 +41,18 @@
             transform: translateY(-50%);
             font-size: 1.2rem;
             font-weight: bold;
-            color: rgba(204, 255, 0, 0.4);
             letter-spacing: 0.5rem;
             writing-mode: vertical-rl;
             text-transform: uppercase;
             z-index: 10000;
-            /* ノイズ(9999)よりもさらに上に設定 */
             color: #00c3ff;
-            /* 透明度を一度なくして、ハッキリ表示させてみよう */
             text-shadow: 0 0 10px rgba(204, 255, 0, 0.8);
-            /* ネオンっぽく光らせる */
             pointer-events: none;
             font-family: sans-serif;
         }
 
-        .warning-text.left {
-            left: 20px;
-        }
-
-        .warning-text.right {
-            right: 20px;
-            writing-mode: vertical-lr;
-        }
+        .warning-text.left { left: 20px; }
+        .warning-text.right { right: 20px; writing-mode: vertical-lr; }
 
         body {
             margin: 0;
@@ -119,35 +73,18 @@
             pointer-events: none;
         }
 
-        .top-left {
-            top: 0;
-            left: 0;
-        }
+        .top-left { top: 0; left: 0; }
+        .top-right { top: 0; right: 0; }
+        .bottom-left { bottom: 0; left: 0; }
+        .bottom-right { bottom: 0; right: 0; }
 
-        .top-right {
-            top: 0;
-            right: 0;
-        }
-
-        .bottom-left {
-            bottom: 0;
-            left: 0;
-        }
-
-        .bottom-right {
-            bottom: 0;
-            right: 0;
-        }
-
+        /* 3. コンテナ（メインエリア）のグリッチ揺れ */
         .container {
-            position: top;
             max-width: 90%;
             width: 800px;
             min-height: 100vh;
             margin: 20px auto;
             background-color: rgba(238, 255, 2, 0.8);
-
-            /* 少し暗く調整 */
             background-image: url('ロゴ2.svg');
             background-repeat: no-repeat;
             background-position: top center;
@@ -161,32 +98,51 @@
             justify-content: flex-end;
             align-items: center;
             z-index: 10;
+            position: relative;
+            /* 5秒に一度、不規則にガタつく */
+            animation: container-glitch 5s infinite;
         }
 
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            width: 100%;
+        @keyframes container-glitch {
+            0%, 90%, 100% { transform: translate(0, 0); }
+            92% { transform: translate(-2px, 2px); }
+            94% { transform: translate(2px, -2px); }
+            96% { transform: translate(-1px, 1px); }
         }
 
-        .btn-img-link {
-            display: inline-block;
-            transition: 0.3s;
-        }
+       .btn-group {
+    position: relative;
+    width: 100%;
+    height: 600px; /* 300pxから600pxに広げて、ボタンが暴れ回るスペースを作る */
+    display: block;
+}
 
+.btn-img-link {
+    position: absolute; /* 自由配置にする */
+    transition: 0.1s, top 0.5s, left 0.5s; /* 配置が変わる時の動きを滑らかに */
+}
+        /* 4. ボタンのホバーエフェクト（アメコミグリッチ） */
         .btn-img-link img {
-            display: block;
-            width: 140px;
-            height: auto;
-            filter: drop-shadow(0 0 5px rgba(204, 255, 0, 0.5));
-            transition: 0.3s;
-        }
+    display: block;
+    width: 280px; /* ここを140pxから280pxに倍増！ */
+    height: auto;
+    filter: drop-shadow(0 0 5px rgba(204, 255, 0, 0.5));
+    transition: 0.1s;
+}
 
-        .btn-img-link:hover img {
-            filter: drop-shadow(0 0 15px rgba(204, 255, 0, 1));
-            transform: scale(1.1);
+/* ホバーした時はさらに巨大化させる */
+.btn-img-link:hover img {
+    filter: drop-shadow(0 0 15px rgba(204, 255, 0, 1)) invert(1);
+    transform: scale(1.2) rotate(5deg); /* 1.1から1.2へ。回転も強めに */
+    animation: button-shake 0.2s infinite;
+}
+
+        @keyframes button-shake {
+            0% { transform: translate(0, 0) rotate(2deg); }
+            25% { transform: translate(-2px, 2px) rotate(2deg); }
+            50% { transform: translate(2px, -2px) rotate(2deg); }
+            75% { transform: translate(-1px, -1px) rotate(2deg); }
+            100% { transform: translate(0, 0) rotate(2deg); }
         }
     </style>
 </head>
@@ -205,15 +161,38 @@
     <div class="container">
         <div class="btn-group">
             <a href="profile.html" class="btn-img-link">
-                <img src="WhoamI.png" alt="ABOUT">
+                <img src="whoami.svg" alt="ABOUT">
             </a>
-
-            <a href="archive.html" class="btn-img-link"><img src="archive.png" alt="WORKS"></a>
-            <a href="skill.html" class="btn-img-link"><img src="skills.png" alt="SKILLS"></a>
-            <a href="signal.html" class="btn-img-link"><img src="Signal.png" alt="CONTACT"></a>
+            <a href="archive.html" class="btn-img-link"><img src="archive.svg" alt="WORKS"></a>
+            <a href="skill.html" class="btn-img-link"><img src="skills.svg" alt="SKILLS"></a>
+            <a href="signal.html" class="btn-img-link"><img src="Signal.svg" alt="CONTACT"></a>
         </div>
+
     </div>
-    </div>
+    <script>
+    window.onload = function() {
+        const buttons = document.querySelectorAll('.btn-img-link');
+        const container = document.querySelector('.btn-group');
+
+        buttons.forEach(btn => {
+            // コンテナの幅と高さから、ボタンがはみ出さない範囲を計算
+            const maxX = container.clientWidth - btn.clientWidth;
+            const maxY = container.clientHeight - btn.clientHeight;
+
+            // ランダムな数値を生成
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            // 位置を適用
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+            
+            // ついでに角度も少しランダムに傾けるとより「毒」っぽい
+            const randomRotate = Math.floor(Math.random() * 20) - 10; // -10度〜10度
+            btn.style.transform = `rotate(${randomRotate}deg)`;
+        });
+    };
+</script>
 </body>
 
 </html>
