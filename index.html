@@ -63,6 +63,8 @@
             background-repeat: repeat;
             background-size: 300px auto;
             background-attachment: fixed;
+            /* スマホで横スクロールが発生しないようにする */
+            overflow-x: hidden; 
         }
 
         .corner-decoration {
@@ -84,12 +86,12 @@
             width: 800px;
             min-height: 100vh;
             margin: 20px auto;
-           background-color: rgba(30, 30, 30, 0.8);
+            background-color: rgba(30, 30, 30, 0.8);
             background-image: url('ロゴ.svg');
             background-repeat: no-repeat;
             background-position: center;
             background-size: 100%;
-             border: 1px solid #ccff00;
+            border: 1px solid #ccff00;
             box-shadow: 0 0 20px rgba(204, 255, 0, 0.2);
             padding: 70px;
             display: flex;
@@ -98,7 +100,6 @@
             align-items: center;
             z-index: 10;
             position: relative;
-            /* 5秒に一度、不規則にガタつく */
             animation: container-glitch 5s infinite;
         }
 
@@ -109,32 +110,32 @@
             96% { transform: translate(-1px, 1px); }
         }
 
-       .btn-group {
-    position: relative;
-    width: 100%;
-    height: 1000px; /* 300pxから600pxに広げて、ボタンが暴れ回るスペースを作る */
-    margin: 0 auto;
-}
+        .btn-group {
+            position: relative;
+            width: 100%;
+            height: 1000px; 
+            margin: 0 auto;
+        }
 
-.btn-img-link {
-    position: absolute; /* 自由配置にする */
-    transition: 0.1s, top 0.5s, left 0.5s; /* 配置が変わる時の動きを滑らかに */
-}
-        /* 4. ボタンのホバーエフェクト（アメコミグリッチ） */
+        .btn-img-link {
+            position: absolute; 
+            transition: 0.1s, top 0.5s, left 0.5s; 
+        }
+
+        /* 4. ボタンのホバーエフェクト */
         .btn-img-link img {
-    display: block;
-    width: 280px; /* ここを140pxから280pxに倍増！ */
-    height: auto;
-    filter: drop-shadow(0 0 5px rgba(204, 255, 0, 0.5));
-    transition: 0.1s;
-}
+            display: block;
+            width: 280px; 
+            height: auto;
+            filter: drop-shadow(0 0 5px rgba(204, 255, 0, 0.5));
+            transition: 0.1s;
+        }
 
-/* ホバーした時はさらに巨大化させる */
-.btn-img-link:hover img {
-    filter: drop-shadow(0 0 15px rgba(204, 255, 0, 1)) invert(1);
-    transform: scale(1.4) rotate(5deg); /* 1.1から1.2へ。回転も強めに */
-    animation: button-shake 0.2s infinite;
-}
+        .btn-img-link:hover img {
+            filter: drop-shadow(0 0 15px rgba(204, 255, 0, 1)) invert(1);
+            transform: scale(1.4) rotate(5deg); 
+            animation: button-shake 0.2s infinite;
+        }
 
         @keyframes button-shake {
             0% { transform: translate(0, 0) rotate(2deg); }
@@ -142,6 +143,36 @@
             50% { transform: translate(2px, -2px) rotate(2deg); }
             75% { transform: translate(-1px, -1px) rotate(2deg); }
             100% { transform: translate(0, 0) rotate(2deg); }
+        }
+
+        /* =========================================
+           スマホ用のレスポンシブ設定 (画面幅768px以下)
+           ========================================= */
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 95%; /* 横幅を画面いっぱいに */
+                padding: 30px; /* 余白を狭く */
+                min-height: 80vh; 
+            }
+            .btn-group {
+                height: 600px; /* スマホだと縦幅が長すぎると間延びするので調整 */
+            }
+            .btn-img-link img {
+                width: 140px; /* スマホ用にボタン画像を半分くらいのサイズに縮小 */
+            }
+            .btn-img-link:hover img {
+                transform: scale(1.2) rotate(5deg); /* 拡大率もスマホに合わせて少し抑えめに */
+            }
+            .warning-text {
+                font-size: 0.8rem; /* 警告テキストを小さく */
+                letter-spacing: 0.2rem;
+            }
+            .warning-text.left { left: 5px; }
+            .warning-text.right { right: 5px; }
+            
+            .corner-decoration {
+                width: 100px; /* 四隅の装飾も小さくして邪魔にならないように */
+            }
         }
     </style>
 </head>
@@ -160,86 +191,87 @@
     <div class="container">
         <div class="btn-group">
             <a href="profile.html" class="btn-img-link">
-                <img src="whoami.svg" alt="ABOUT">
+                <img src="WhoamI.png" alt="ABOUT">
             </a>
-            <a href="archive.html" class="btn-img-link"><img src="archive.svg" alt="WORKS"></a>
-            <a href="skill.html" class="btn-img-link"><img src="skills.svg" alt="SKILLS"></a>
-            <a href="signal.html" class="btn-img-link"><img src="Signal.svg" alt="CONTACT"></a>
+            <a href="archive.html" class="btn-img-link"><img src="archive.png" alt="WORKS"></a>
+            <a href="signal.html" class="btn-img-link"><img src="Signal.png" alt="CONTACT"></a>
         </div>
-
     </div>
-   <script>
-    window.onload = function() {
-        const buttons = document.querySelectorAll('.btn-img-link');
-        const container = document.querySelector('.btn-group');
-        const placedRects = []; // 配置済みのボタンを記録
 
-        // --- 中央の「ロゴ区域（進入禁止）」を定義 ---
-        // containerWidth, Heightを取得
-        const cw = container.clientWidth;
-        const ch = container.clientHeight;
+    <script>
+        window.onload = function() {
+            const buttons = document.querySelectorAll('.btn-img-link');
+            const container = document.querySelector('.btn-group');
+            const placedRects = []; 
 
-        // ここでロゴの「禁止エリア」の大きさを決める（px単位）
-        const fw = 500; // ロゴの横幅（これくらいかな？）
-        const fh = 400; // ロゴの高さ
+            const cw = container.clientWidth;
+            const ch = container.clientHeight;
 
-        const forbiddenRect = {
-            x: (cw / 2) - (fw / 2),
-            y: (ch / 2) - (fh / 2),
-            w: fw,
-            h: fh
-        };
+            // スマホなどの画面幅に合わせて禁止エリア(ロゴ部分)を柔軟に計算する
+            // コンテナ幅の80%（最大500px）を禁止エリアの横幅にする
+            const fw = Math.min(500, cw * 0.8); 
+            // 高さは横幅に合わせて比率で縮める（最大400px）
+            const fh = Math.min(400, fw * 0.8); 
 
-        buttons.forEach(btn => {
-            const bw = btn.clientWidth;
-            const bh = btn.clientHeight;
-            const maxX = cw - bw;
-            const maxY = ch - bh;
+            const forbiddenRect = {
+                x: (cw / 2) - (fw / 2),
+                y: (ch / 2) - (fh / 2),
+                w: fw,
+                h: fh
+            };
 
-            let rx, ry;
-            let isSafe = false;
-            let attempts = 0;
+            buttons.forEach(btn => {
+                const bw = btn.clientWidth;
+                const bh = btn.clientHeight;
+                // ボタンがコンテナからはみ出さないように最大値を計算
+                // (もしボタンが大きすぎる場合は0未満になるのでMath.maxで0にする)
+                const maxX = Math.max(0, cw - bw);
+                const maxY = Math.max(0, ch - bh);
 
-            // 安全な場所が見つかるまで最大200回リトライ
-            while (!isSafe && attempts < 200) {
-                rx = Math.floor(Math.random() * maxX);
-                ry = Math.floor(Math.random() * maxY);
+                let rx, ry;
+                let isSafe = false;
+                let attempts = 0;
 
-                // 1. ロゴ区域と重なっているか判定
-                const overlapForbidden = !(
-                    rx + bw < forbiddenRect.x ||
-                    rx > forbiddenRect.x + forbiddenRect.w ||
-                    ry + bh < forbiddenRect.y ||
-                    ry > forbiddenRect.y + forbiddenRect.h
-                );
+                // 安全な場所が見つかるまで最大200回リトライ
+                while (!isSafe && attempts < 200) {
+                    rx = Math.floor(Math.random() * maxX);
+                    ry = Math.floor(Math.random() * maxY);
 
-                // 2. 他のボタンと重なっているか判定
-                const overlapOthers = placedRects.some(rect => {
-                    return !(
-                        rx + bw < rect.x ||
-                        rx > rect.x + rect.w ||
-                        ry + bh < rect.y ||
-                        ry > rect.y + rect.h
+                    // 1. ロゴ区域と重なっているか判定
+                    const overlapForbidden = !(
+                        rx + bw < forbiddenRect.x ||
+                        rx > forbiddenRect.x + forbiddenRect.w ||
+                        ry + bh < forbiddenRect.y ||
+                        ry > forbiddenRect.y + forbiddenRect.h
                     );
-                });
 
-                // 「ロゴとも重ならず」かつ「他のボタンとも重ならない」ならOK
-                if (!overlapForbidden && !overlapOthers) {
-                    isSafe = true;
+                    // 2. 他のボタンと重なっているか判定
+                    const overlapOthers = placedRects.some(rect => {
+                        return !(
+                            rx + bw < rect.x ||
+                            rx > rect.x + rect.w ||
+                            ry + bh < rect.y ||
+                            ry > rect.y + rect.h
+                        );
+                    });
+
+                    // 「ロゴとも重ならず」かつ「他のボタンとも重ならない」ならOK
+                    if (!overlapForbidden && !overlapOthers) {
+                        isSafe = true;
+                    }
+                    attempts++;
                 }
-                attempts++;
-            }
 
-            // 場所を記録して適用
-            placedRects.push({ x: rx, y: ry, w: bw, h: bh });
-            btn.style.left = rx + 'px';
-            btn.style.top = ry + 'px';
-            
-            const randomRotate = Math.floor(Math.random() * 20) - 10;
-            btn.style.transform = `rotate(${randomRotate}deg)`;
-        });
-    };
-</script>
+                // 場所を記録して適用
+                placedRects.push({ x: rx, y: ry, w: bw, h: bh });
+                btn.style.left = rx + 'px';
+                btn.style.top = ry + 'px';
+                
+                const randomRotate = Math.floor(Math.random() * 20) - 10;
+                btn.style.transform = `rotate(${randomRotate}deg)`;
+            });
+        };
+    </script>
 </body>
 
 </html>

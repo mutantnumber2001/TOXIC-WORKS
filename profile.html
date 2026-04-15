@@ -14,59 +14,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* ドットを少し大きく、色を白っぽくして目立たせる */
             background: radial-gradient(circle, rgba(14, 13, 13, 0.822) 15px, transparent 15px);
             background-size: 4px 4px;
             pointer-events: none;
             z-index: 9999;
-            /* overlayからscreenに変更して、暗い場所でも見えるようにする */
             mix-blend-mode: screen;
             animation: noise-anim 0.15s infinite;
-            /* アニメーション速度を少し上げたよ */
         }
 
-        /* ノイズを動かすアニメーションの定義 */
         @keyframes noise-anim {
-            0% {
-                transform: translate(0, 0);
-                opacity: 0.3;
-            }
-
-            15% {
-                transform: translate(-8px, 4px);
-                opacity: 0.6;
-            }
-
-            /* 瞬間的に大きくズレる */
-            30% {
-                transform: translate(5px, -5px);
-                opacity: 0.2;
-            }
-
-            45% {
-                transform: translate(-4px, 8px);
-                opacity: 0.7;
-            }
-
-            60% {
-                transform: translate(7px, 2px);
-                opacity: 0.3;
-            }
-
-            75% {
-                transform: translate(-6px, -3px);
-                opacity: 0.5;
-            }
-
-            90% {
-                transform: translate(3px, 6px);
-                opacity: 0.2;
-            }
-
-            100% {
-                transform: translate(0, 0);
-                opacity: 0.4;
-            }
+            0% { transform: translate(0, 0); opacity: 0.3; }
+            15% { transform: translate(-8px, 4px); opacity: 0.6; }
+            30% { transform: translate(5px, -5px); opacity: 0.2; }
+            45% { transform: translate(-4px, 8px); opacity: 0.7; }
+            60% { transform: translate(7px, 2px); opacity: 0.3; }
+            75% { transform: translate(-6px, -3px); opacity: 0.5; }
+            90% { transform: translate(3px, 6px); opacity: 0.2; }
+            100% { transform: translate(0, 0); opacity: 0.4; }
         }
 
         /* 2. 両サイドの警告テキスト */
@@ -76,18 +40,15 @@
             transform: translateY(-50%);
             font-size: 1.2rem;
             font-weight: bold;
-            color: rgba(204, 255, 0, 0.4);
             letter-spacing: 0.5rem;
             writing-mode: vertical-rl;
             text-transform: uppercase;
             z-index: 10000;
-            /* ノイズ(9999)よりもさらに上に設定 */
             color: #00c3ff;
-            /* 透明度を一度なくして、ハッキリ表示させてみよう */
             text-shadow: 0 0 10px rgba(204, 255, 0, 0.8);
-            /* ネオンっぽく光らせる */
             pointer-events: none;
             font-family: sans-serif;
+            opacity: 0.6; 
         }
 
         .warning-text.left {
@@ -98,10 +59,6 @@
             right: 20px;
             writing-mode: vertical-lr;
         }
-        .warning-text {
-  /* 0.0（完全に透明）〜 1.0（完全に不透明）の間で指定 */
-  opacity: 0.6; 
-}
 
         body {
             margin: 0;
@@ -122,25 +79,10 @@
             pointer-events: none;
         }
 
-        .top-left {
-            top: 0;
-            left: 0;
-        }
-
-        .top-right {
-            top: 0;
-            right: 0;
-        }
-
-        .bottom-left {
-            bottom: 0;
-            left: 0;
-        }
-
-        .bottom-right {
-            bottom: 0;
-            right: 0;
-        }
+        .top-left { top: 0; left: 0; }
+        .top-right { top: 0; right: 0; }
+        .bottom-left { bottom: 0; left: 0; }
+        .bottom-right { bottom: 0; right: 0; }
 
         .container {
             position: relative;
@@ -149,7 +91,6 @@
             min-height: 80vh;
             margin: 30px auto;
             background-color: rgba(30, 30, 30, 0.8);
-            /* 少し暗く調整 */
             background-image: url('ロゴ - コピー.svg');
             background-repeat: no-repeat;
             background-position: center 20%;
@@ -162,32 +103,6 @@
             justify-content: flex-end;
             align-items: center;
             z-index: 10;
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            width: 100%;
-        }
-
-        .btn-img-link {
-            display: inline-block;
-            transition: 0.3s;
-        }
-
-        .btn-img-link img {
-            display: block;
-            width: 140px;
-            height: auto;
-            filter: drop-shadow(0 0 5px rgba(204, 255, 0, 0.5));
-            transition: 0.3s;
-        }
-
-        .btn-img-link:hover img {
-            filter: drop-shadow(0 0 15px rgba(204, 255, 0, 1));
-            transform: scale(1.1);
         }
 
         .profile-container {
@@ -207,7 +122,6 @@
             margin-bottom: 30px;
         }
 
-        /* 戻るボタンのスタイル */
         .back-link {
             display: inline-block;
             margin-top: 30px;
@@ -223,39 +137,53 @@
             color: #000;
         }
 
-        /* アイコン画像を小さく＆丸くする */
         .profile-icon img {
             width: 80px;
-            /* 120pxから小さく変更（好みのサイズで調整してね） */
             height: 80px;
-            /* widthと同じ数字にするのが綺麗な丸を作るコツ */
             border-radius: 50%;
-            /* これが画像を完全な円形にするコード！ */
             object-fit: cover;
-            /* 元の画像が正方形じゃなくても歪まないようにする */
             filter: drop-shadow(0 0 10px rgba(204, 255, 0, 0.5));
-            /* ネオンの光彩はそのまま */
             border: 2px solid #ccff00;
-            /* オマケ：丸い画像の周りにネオンの枠線をつけるとさらにカッコいいよ */
         }
 
-        /* 本文のテキスト設定 */
         .profile-body {
             line-height: 1.8;
             font-size: 1.1rem;
             color: rgba(204, 255, 0, 0.6);
-            /* ここを好きな色番号に変更！（今は真っ白に設定） */
+            /* タイピングが終わるまで最低限の高さを確保してガタつきを防ぐ */
+            min-height: 200px; 
         }
 
-        /* タイトルの色も変えたい場合はここ */
+        /* pタグの初期状態を空にしておくための保険 */
+        .text-content p {
+            margin-bottom: 1em;
+            min-height: 1.8em; 
+        }
+
         .profile-title {
             font-family: Georgia, 'Times New Roman', Times, serif;
             font-size: 3rem;
             color: #ccff00;
-            /* TOXICなネオンイエロー。白にするなら #ffffff など */
             text-transform: uppercase;
             margin: 0;
             text-shadow: 0 0 15px rgba(204, 255, 0, 0.6);
+        }
+
+        /* --- 新規追加：点滅するカーソルのCSS --- */
+        .typing-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background-color: #ccff00;
+            vertical-align: middle;
+            margin-left: 4px;
+            animation: blink 0.8s step-end infinite;
+            box-shadow: 0 0 5px #ccff00;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
     </style>
 </head>
@@ -268,6 +196,7 @@
     <img src="右上.png" class="corner-decoration top-right" alt="装飾右上">
     <img src="左下.png" class="corner-decoration bottom-left" alt="装飾左下">
     <img src="右下.png" class="corner-decoration bottom-right" alt="装飾右下">
+    
     <div class="profile-container">
         <header class="profile-header">
             <div class="profile-icon">
@@ -282,12 +211,61 @@
                 <p>2001年。愛知県生まれ。もともとWeb商材の営業をしていたが、鬱病になり退職。</p>
                 <p>失業手当のために行ったハローワークでデザイナーコースを勧められ、まんまとデザインの勉強中。</p>
                 <p>せっかくならwebデザインも一緒に学びたいと思い、独学でコーディングの勉強中。</p>
-                <p>趣味　音楽（聴くだけ）アートトイの収集、筋トレ、ゲーム（ポケモン大好きです。最近Skyrim始めた。）</p>
+                <p>趣味　音楽アートトイの収集、筋トレ、ゲーム</p>
             </div>
         </main>
 
         <a href="index.html" class="back-link">BACK TO HOME</a>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const paragraphs = document.querySelectorAll('.text-content p');
+            const typeSpeed = 40; // 1文字が出るスピード（ミリ秒）。数字を小さくすると速くなる。
+            const nextLineDelay = 400; // 次の行にいくまでのタメ時間（ミリ秒）
+            
+            // 元のテキストを保存して、画面から一旦消す
+            const textArray = [];
+            paragraphs.forEach(p => {
+                textArray.push(p.textContent);
+                p.textContent = '';
+            });
+
+            let pIndex = 0;
+            let charIndex = 0;
+
+            // カーソル要素を作成
+            const cursor = document.createElement('span');
+            cursor.className = 'typing-cursor';
+
+            function typeWriter() {
+                if (pIndex < paragraphs.length) {
+                    // 現在の行にカーソルを移動
+                    paragraphs[pIndex].appendChild(cursor);
+
+                    if (charIndex < textArray[pIndex].length) {
+                        // カーソルの前に1文字ずつ追加していく
+                        const textNode = document.createTextNode(textArray[pIndex].charAt(charIndex));
+                        paragraphs[pIndex].insertBefore(textNode, cursor);
+                        charIndex++;
+                        setTimeout(typeWriter, typeSpeed);
+                    } else {
+                        // 1行打ち終わったら次の行へ
+                        pIndex++;
+                        charIndex = 0;
+                        setTimeout(typeWriter, nextLineDelay);
+                    }
+                } else {
+                    // 全部打ち終わった後もカーソルを点滅させたままにする（ターミナルっぽさ重視）
+                    // カーソルを消したい場合は下の // を外す
+                    // cursor.remove();
+                }
+            }
+
+            // 画面が開いてから少しタメてスタート（0.5秒後）
+            setTimeout(typeWriter, 500); 
+        });
+    </script>
 </body>
 
 </html>
